@@ -1,0 +1,14 @@
+# Cargo build artifacts
+/target/
+**/target/
+
+# Cargo lock file (include if this is a binary, exclude if library)
+Cargo.lock
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
