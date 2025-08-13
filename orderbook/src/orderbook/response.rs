@@ -5,6 +5,7 @@ pub enum CustomError{
     ModifyQuantityCannotBeLesserThanFilledQuantity
 }
 
+#[derive(Debug)]
 pub struct MarketOrderResponse{
     success: bool,
     average_price: Decimal,

@@ -1,17 +1,15 @@
 use std::collections::HashMap;
 use std::collections::{BTreeMap, VecDeque};
-
 use rust_decimal::Decimal;
-
-use std::cmp::Ordering;
-
 use std::cmp::Reverse;
 
-#[derive(Clone)]
+#[derive(Clone,Debug)]
 pub enum Side{
     Asks,
     Bids
 }
+
+#[derive(Debug)]
 pub struct Orderbook{
     pub bids: BTreeMap<Reverse<Decimal>,VecDeque<OpenOrder>>,
     pub asks: BTreeMap<Decimal,VecDeque<OpenOrder>>,
@@ -19,6 +17,7 @@ pub struct Orderbook{
     pub order_map:HashMap<u64,OpenOrder>
 }
 
+#[derive(Clone)]
 pub struct LimitOrder{
     pub price: Decimal,
     pub quantity: Decimal,
@@ -37,6 +36,7 @@ pub struct Depth{
     pub asks: Vec<Order>
 }
 
+#[derive(Debug)]
 pub struct Order{
     pub price: Decimal,
     pub quantity: Decimal,
@@ -50,7 +50,7 @@ pub struct ModifyOrderRequest{
     pub order_id:u64
 }
 
-#[derive(Clone)]
+#[derive(Clone,Debug)]
 pub struct OpenOrder{
     pub price: Decimal,
     pub quantity: Decimal,
