@@ -2,7 +2,7 @@ use std::collections::{BTreeMap, HashMap, VecDeque};
 
 use rust_decimal::{dec, Decimal};
 
-use crate::{orderbook::types::{CustomError, DeleteResponse, Depth, ErrorResponse, MarketOrderResponse, ModifyOrderRequest, ModifyOrderResponse, OpenOrder, Order, Side}, LimitOrder, MarketOrder, Orderbook};
+use crate::{orderbook::{response::{CustomError,DeleteResponse,ErrorResponse, MarketOrderResponse,ModifyOrderResponse}, types::{Depth, ModifyOrderRequest, OpenOrder, Order, Side}}, LimitOrder, MarketOrder, Orderbook};
 
 use std::cmp::Reverse;
 

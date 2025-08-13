@@ -5,6 +5,9 @@ pub use orderbook::types::{
     Orderbook,
     OpenOrder,
     MarketOrder,
-    MarketOrderResponse,
     Depth
+};
+
+pub use orderbook::response::{
+    MarketOrderResponse
 };

@@ -7,7 +7,11 @@ use std::cmp::Ordering;
 
 use std::cmp::Reverse;
 
-
+#[derive(Clone)]
+pub enum Side{
+    Asks,
+    Bids
+}
 pub struct Orderbook{
     pub bids: BTreeMap<Reverse<Decimal>,VecDeque<OpenOrder>>,
     pub asks: BTreeMap<Decimal,VecDeque<OpenOrder>>,
@@ -40,52 +44,10 @@ pub struct Order{
     
 }
 
-pub struct DeleteResponse{
-    success: bool,
-    price:Decimal,
-    quantity:Decimal,
-    quantity_filled:Decimal,
-    order_id:u64
-}
-
-pub enum CustomError{
-    OrderDoesNotExist,
-    ModifyQuantityCannotBeLesserThanFilledQuantity
-}
-
-pub struct ErrorResponse{
-    error:CustomError
-}
-
 pub struct ModifyOrderRequest{
     pub price:Option<Decimal>,
     pub quantity: Option<Decimal>,
     pub order_id:u64
-}
-
-pub struct ModifyOrderResponse{
-    pub success:bool,
-    pub price:Decimal,
-    pub quantity: Decimal,
-    pub order_id:u64
-}
-
-impl ModifyOrderResponse{
-    pub fn new(price:Decimal,quantity:Decimal,order_id:u64)->ModifyOrderResponse{
-        ModifyOrderResponse { success: true, price, quantity, order_id }
-    }
-}
-
-impl ErrorResponse{
-    pub fn new(err: CustomError)->ErrorResponse{
-        ErrorResponse { error:err}
-    }
-}
-
-impl DeleteResponse{
-    pub fn new(price:Decimal,quantity:Decimal,quantity_filled:Decimal,order_id:u64)->DeleteResponse{
-        DeleteResponse { success:true,price,quantity, quantity_filled, order_id }
-    }
 }
 
 #[derive(Clone)]
@@ -104,20 +66,3 @@ impl OpenOrder {
     }
 }
 
-#[derive(Clone)]
-pub enum Side{
-    Asks,
-    Bids
-}
-
-pub struct MarketOrderResponse{
-    success: bool,
-    average_price: Decimal,
-    quantity:Decimal
-}
-
-impl MarketOrderResponse{
-    pub fn new(success: bool,average_price:Decimal,quantity:Decimal)->MarketOrderResponse{
-        MarketOrderResponse { success, average_price, quantity }
-    }
-}
