@@ -1,5 +1,5 @@
 use orderbook::{
-    Depth, LimitOrder, MarketOrder, MarketOrderResponse, OpenOrder, Orderbook
+    DeleteResponse, Depth, ErrorResponse, LimitOrder, MarketOrder, MarketOrderResponse, ModifyOrderRequest, ModifyOrderResponse, OpenOrder, Orderbook
 };
 
 struct TradingEngine{
@@ -21,6 +21,18 @@ impl TradingEngine{
 
     fn get_depth(&self)->Depth{
         self.orderbook.depth()
+    }
+
+    fn delete_order(&mut self,order_id:u64)->Result<DeleteResponse,ErrorResponse>{
+        self.orderbook.delete_order(order_id)
+    }
+
+    fn modify_order(&mut self,order:ModifyOrderRequest)->Result<ModifyOrderResponse,ErrorResponse>{
+        self.orderbook.modify_order(order)
+    }
+
+    fn get_order_by_id(&self,order_id:u64)->Result<OpenOrder,ErrorResponse>{
+        self.orderbook.get_order(order_id)
     }
 }
  

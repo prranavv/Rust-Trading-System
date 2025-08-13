@@ -5,9 +5,13 @@ pub use orderbook::types::{
     Orderbook,
     OpenOrder,
     MarketOrder,
-    Depth
+    Depth,
+    ModifyOrderRequest,
 };
 
 pub use orderbook::response::{
-    MarketOrderResponse
+    MarketOrderResponse,
+    ModifyOrderResponse,
+    ErrorResponse,
+    DeleteResponse
 };

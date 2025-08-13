@@ -44,6 +44,18 @@ impl Orderbook{
         return (best_ask+best_bid)/dec!(2);
     }
 
+    pub fn get_order(&self,order_id:u64)->Result<OpenOrder,ErrorResponse>{
+        let order =self.order_map.get(&order_id);
+        match order{
+            Some(o)=>{
+                return Ok(o.clone())
+            },
+            None=>{
+                return Err(ErrorResponse::new(CustomError::OrderDoesNotExist))
+            }
+        }
+    }
+
     pub fn depth(&self)->Depth{
         let bids=self.get_bids();
         let asks=self.get_asks();
@@ -179,6 +191,7 @@ impl Orderbook{
         open_order
     }
     
+    //TODO - MATCHING IS DONE.NOW EXECUTE THE TRADES
     fn match_limit_order(&mut self,order: LimitOrder,order_id:u64)->OpenOrder{
         let price = order.price;
         let mut remaining_quantity=order.quantity;
