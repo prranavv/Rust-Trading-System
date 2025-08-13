@@ -41,6 +41,7 @@ pub struct Order{
 }
 
 pub struct DeleteResponse{
+    success: bool,
     price:Decimal,
     quantity:Decimal,
     quantity_filled:Decimal,
@@ -48,22 +49,42 @@ pub struct DeleteResponse{
 }
 
 pub enum CustomError{
-    OrderDoesNotExist
+    OrderDoesNotExist,
+    ModifyQuantityCannotBeLesserThanFilledQuantity
 }
 
-pub struct DeleteResponseError{
+pub struct ErrorResponse{
     error:CustomError
 }
 
-impl DeleteResponseError{
-    pub fn new(err: CustomError)->DeleteResponseError{
-        DeleteResponseError { error:err}
+pub struct ModifyOrderRequest{
+    pub price:Option<Decimal>,
+    pub quantity: Option<Decimal>,
+    pub order_id:u64
+}
+
+pub struct ModifyOrderResponse{
+    pub success:bool,
+    pub price:Decimal,
+    pub quantity: Decimal,
+    pub order_id:u64
+}
+
+impl ModifyOrderResponse{
+    pub fn new(price:Decimal,quantity:Decimal,order_id:u64)->ModifyOrderResponse{
+        ModifyOrderResponse { success: true, price, quantity, order_id }
+    }
+}
+
+impl ErrorResponse{
+    pub fn new(err: CustomError)->ErrorResponse{
+        ErrorResponse { error:err}
     }
 }
 
 impl DeleteResponse{
     pub fn new(price:Decimal,quantity:Decimal,quantity_filled:Decimal,order_id:u64)->DeleteResponse{
-        DeleteResponse { price,quantity, quantity_filled, order_id }
+        DeleteResponse { success:true,price,quantity, quantity_filled, order_id }
     }
 }
 

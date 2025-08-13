@@ -2,7 +2,7 @@ use std::collections::{BTreeMap, HashMap, VecDeque};
 
 use rust_decimal::{dec, Decimal};
 
-use crate::{orderbook::types::{CustomError, DeleteResponse, DeleteResponseError, Depth, MarketOrderResponse, OpenOrder, Order, Side}, LimitOrder, MarketOrder, Orderbook};
+use crate::{orderbook::types::{CustomError, DeleteResponse, Depth, ErrorResponse, MarketOrderResponse, ModifyOrderRequest, ModifyOrderResponse, OpenOrder, Order, Side}, LimitOrder, MarketOrder, Orderbook};
 
 use std::cmp::Reverse;
 
@@ -69,8 +69,7 @@ impl Orderbook{
         asks
     }
 
-    //TODO
-    pub fn delete_order(&mut self,order_id:u64)->Result<DeleteResponse,DeleteResponseError>{
+    pub fn delete_order(&mut self,order_id:u64)->Result<DeleteResponse,ErrorResponse>{
         let order=self.order_map.get(&order_id);
         if let Some(o)=order{
             let side=o.side.clone();
@@ -100,13 +99,76 @@ impl Orderbook{
             }
         }else{
             let err = CustomError::OrderDoesNotExist;
-            Err(DeleteResponseError::new(err))
+            Err(ErrorResponse::new(err))
         }   
     }
 
     //TODO - MODIFY IN PLACE WITHOUT CHANGING THE TIME PRIORITY
-    pub fn modify_order(&mut self,order_id:u64){
-
+    pub fn modify_order(&mut self,modify_order_request:ModifyOrderRequest)->Result<ModifyOrderResponse,ErrorResponse>{
+        let order = self.order_map.get(&modify_order_request.order_id);
+        if let Some(o)=order{
+            let side=o.side.clone();
+            let price = o.price;
+            match side{
+                Side::Asks=>{
+                    let open_orders=self.asks.get_mut(&price).unwrap();
+                    let open_order =open_orders
+                        .iter_mut()
+                        .find(|v|v.order_id==modify_order_request.order_id)
+                        .unwrap();
+                    match modify_order_request.price{
+                        Some(x)=>{open_order.price=x},
+                        None=>{}
+                    }
+                    match modify_order_request.quantity{
+                        Some(x)=>{
+                            if x >=open_order.quantity_filled{
+                                open_order.quantity=x;
+                            }
+                            else{
+                                return Err(ErrorResponse::new(CustomError::ModifyQuantityCannotBeLesserThanFilledQuantity))
+                            }
+                        },
+                        None=>{}
+                    }
+                    let open_order =open_orders
+                        .iter()
+                        .find(|v|v.order_id==modify_order_request.order_id)
+                        .unwrap();
+                    Ok(ModifyOrderResponse::new(open_order.price, open_order.quantity, open_order.order_id))
+                },
+                Side::Bids=>{
+                    let open_orders=self.bids.get_mut(&Reverse(price)).unwrap();
+                    let open_order =open_orders
+                        .iter_mut()
+                        .find(|v|v.order_id==modify_order_request.order_id)
+                        .unwrap();
+                    match modify_order_request.price{
+                        Some(x)=>{open_order.price=x},
+                        None=>{}
+                    }
+                    match modify_order_request.quantity{
+                        Some(x)=>{
+                            if x >=open_order.quantity_filled{
+                                open_order.quantity=x;
+                            }
+                            else{
+                                return Err(ErrorResponse::new(CustomError::ModifyQuantityCannotBeLesserThanFilledQuantity))
+                            }
+                        },
+                        None=>{}
+                    }
+                    let open_order =open_orders
+                        .iter()
+                        .find(|v|v.order_id==modify_order_request.order_id)
+                        .unwrap();
+                    Ok(ModifyOrderResponse::new(open_order.price, open_order.quantity, open_order.order_id))
+                }
+            }
+        }else{
+            let err = CustomError::OrderDoesNotExist;
+            Err(ErrorResponse::new(err))
+        }
     }
 
     pub fn add_limit_order(&mut self,order: LimitOrder)->OpenOrder{
