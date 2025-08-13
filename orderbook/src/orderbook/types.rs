@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::collections::{BTreeMap, VecDeque};
 
 use rust_decimal::Decimal;
@@ -10,7 +11,8 @@ use std::cmp::Reverse;
 pub struct Orderbook{
     pub bids: BTreeMap<Reverse<Decimal>,VecDeque<OpenOrder>>,
     pub asks: BTreeMap<Decimal,VecDeque<OpenOrder>>,
-    pub order_id_index:u64 
+    pub order_id_index:u64,
+    pub order_map:HashMap<u64,OpenOrder>
 }
 
 pub struct LimitOrder{
@@ -36,6 +38,33 @@ pub struct Order{
     pub quantity: Decimal,
     pub order_count:u64
     
+}
+
+pub struct DeleteResponse{
+    price:Decimal,
+    quantity:Decimal,
+    quantity_filled:Decimal,
+    order_id:u64
+}
+
+pub enum CustomError{
+    OrderDoesNotExist
+}
+
+pub struct DeleteResponseError{
+    error:CustomError
+}
+
+impl DeleteResponseError{
+    pub fn new(err: CustomError)->DeleteResponseError{
+        DeleteResponseError { error:err}
+    }
+}
+
+impl DeleteResponse{
+    pub fn new(price:Decimal,quantity:Decimal,quantity_filled:Decimal,order_id:u64)->DeleteResponse{
+        DeleteResponse { price,quantity, quantity_filled, order_id }
+    }
 }
 
 #[derive(Clone)]

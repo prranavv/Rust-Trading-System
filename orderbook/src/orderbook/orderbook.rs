@@ -1,8 +1,8 @@
-use std::collections::{BTreeMap, VecDeque};
+use std::collections::{BTreeMap, HashMap, VecDeque};
 
 use rust_decimal::{dec, Decimal};
 
-use crate::{orderbook::types::{Depth, MarketOrderResponse, OpenOrder, Order, Side}, LimitOrder, MarketOrder, Orderbook};
+use crate::{orderbook::types::{CustomError, DeleteResponse, DeleteResponseError, Depth, MarketOrderResponse, OpenOrder, Order, Side}, LimitOrder, MarketOrder, Orderbook};
 
 use std::cmp::Reverse;
 
@@ -11,7 +11,8 @@ impl Orderbook{
         Orderbook{
             asks:BTreeMap::new(),
             bids: BTreeMap::new(),
-            order_id_index:0
+            order_id_index:0,
+            order_map:HashMap::new()
         }
     }
 
@@ -69,19 +70,51 @@ impl Orderbook{
     }
 
     //TODO
-    pub fn delete_order(){
-
+    pub fn delete_order(&mut self,order_id:u64)->Result<DeleteResponse,DeleteResponseError>{
+        let order=self.order_map.get(&order_id);
+        if let Some(o)=order{
+            let side=o.side.clone();
+            let price = o.price;
+            match side{
+                Side::Asks=>{
+                    let open_orders=self.asks.get_mut(&price).unwrap();
+                    let (price,quantity,quantity_filled)=open_orders
+                        .iter()
+                        .find(|v|v.order_id==order_id)
+                        .map(|v|(v.price,v.quantity,v.quantity_filled))
+                        .unwrap();
+                    
+                    open_orders.retain(|v|v.order_id!=order_id);
+                    Ok(DeleteResponse::new(price, quantity, quantity_filled, order_id))
+                },
+                Side::Bids=>{
+                    let open_orders=self.bids.get_mut(&Reverse(price)).unwrap();
+                    let (price,quantity,quantity_filled)=open_orders
+                        .iter()
+                        .find(|v|v.order_id==order_id)
+                        .map(|v|(v.price,v.quantity,v.quantity_filled))
+                        .unwrap();
+                    open_orders.retain(|v|v.order_id!=order_id);
+                    Ok(DeleteResponse::new(price, quantity, quantity_filled, order_id))
+                }
+            }
+        }else{
+            let err = CustomError::OrderDoesNotExist;
+            Err(DeleteResponseError::new(err))
+        }   
     }
 
     //TODO - MODIFY IN PLACE WITHOUT CHANGING THE TIME PRIORITY
-    pub fn modify_order(){
+    pub fn modify_order(&mut self,order_id:u64){
 
     }
 
     pub fn add_limit_order(&mut self,order: LimitOrder)->OpenOrder{
         self.order_id_index+=1;
         let order_id=self.order_id_index;
-        self.match_limit_order(order, order_id)
+        let open_order=self.match_limit_order(order, order_id);
+        self.order_map.insert(order_id, open_order.clone());
+        open_order
     }
     
     fn match_limit_order(&mut self,order: LimitOrder,order_id:u64)->OpenOrder{
@@ -101,10 +134,10 @@ impl Orderbook{
                             let mut iter = open_orders.iter_mut();
                             let mut to_remove:Vec<u64> = Vec::new();
                             new_best_bid=order_price;
-                            if new_best_bid<=price{
+                            if new_best_bid>price{
                                 break 'outer;
                             }
-                            while remaining_quantity>dec!(0) && order_price<=price{
+                            while remaining_quantity>dec!(0){
                                 if let Some(o) =iter.next(){
                                     let quantity_remaining=o.quantity-o.quantity_filled;
                                     if remaining_quantity>=quantity_remaining{
@@ -181,10 +214,10 @@ impl Orderbook{
                             let mut iter = open_orders.iter_mut();
                             let mut to_remove:Vec<u64> = Vec::new();
                             new_best_ask=order_price;
-                            if new_best_ask<=price{
+                            if new_best_ask>price{
                                 break 'outer;
                             }
-                            while remaining_quantity>dec!(0) && order_price<=price{
+                            while remaining_quantity>dec!(0){
                                 if let Some(o) =iter.next(){
                                     let quantity_remaining=o.quantity-o.quantity_filled;
                                     if remaining_quantity>=quantity_remaining{
