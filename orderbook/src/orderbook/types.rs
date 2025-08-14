@@ -3,7 +3,7 @@ use std::collections::{BTreeMap, VecDeque};
 use rust_decimal::Decimal;
 use std::cmp::Reverse;
 
-#[derive(Clone,Debug)]
+#[derive(Clone,Debug,PartialEq)]
 pub enum Side{
     Asks,
     Bids
@@ -50,7 +50,7 @@ pub struct ModifyOrderRequest{
     pub order_id:u64
 }
 
-#[derive(Clone,Debug)]
+#[derive(Clone,Debug,PartialEq)]
 pub struct OpenOrder{
     pub price: Decimal,
     pub quantity: Decimal,
