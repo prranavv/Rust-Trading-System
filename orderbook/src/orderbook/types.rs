@@ -37,7 +37,7 @@ pub struct Depth{
     pub asks: Vec<Order>
 }
 
-#[derive(Debug)]
+#[derive(Debug,PartialEq)]
 pub struct Order{
     pub price: Decimal,
     pub quantity: Decimal,
