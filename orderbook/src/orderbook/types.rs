@@ -31,6 +31,7 @@ pub struct MarketOrder{
     pub user_id: u64
 }
 
+#[derive(Debug)]
 pub struct Depth{
     pub bids: Vec<Order>,
     pub asks: Vec<Order>

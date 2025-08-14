@@ -3,6 +3,9 @@ use rust_decimal::dec;
 use crate::{orderbook::types::Side, LimitOrder,Orderbook};
 use std::cmp::Reverse;
 
+#[cfg(test)]
+use pretty_assertions::{assert_eq, assert_ne};
+
 #[test]
 fn test_get_best_ask(){
     let mut orderbook = Orderbook::new();
