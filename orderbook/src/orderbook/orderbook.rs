@@ -187,7 +187,8 @@ impl Orderbook{
                         .iter_mut()
                         .find(|v|v.order_id==modify_order_request.order_id)
                         .unwrap();
-                    o=open_order;
+                    o.price=open_order.price;
+                    o.quantity=open_order.quantity;
                     ModifyOrderResponse::new(open_order.price, open_order.quantity, open_order.order_id)
                 },
                 Side::Bids=>{
@@ -215,7 +216,8 @@ impl Orderbook{
                         .iter_mut()
                         .find(|v|v.order_id==modify_order_request.order_id)
                         .unwrap();
-                    o=open_order;
+                    o.price=open_order.price;
+                    o.quantity=open_order.quantity;
                     ModifyOrderResponse::new(open_order.price, open_order.quantity, open_order.order_id)
                 }
             };
