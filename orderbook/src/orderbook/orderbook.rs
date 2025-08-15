@@ -155,7 +155,7 @@ impl Orderbook{
     //TODO - MODIFY IN PLACE WITHOUT CHANGING THE TIME PRIORITY
     pub fn modify_order(&mut self,modify_order_request:ModifyOrderRequest)->Result<ModifyOrderResponse,ErrorResponse>{
         let order = self.order_map.get_mut(&modify_order_request.order_id);
-        if let Some(mut o)=order{
+        if let Some(o)=order{
             let side=o.side.clone();
             let price = o.price;
             if o.quantity==o.quantity_filled{
