@@ -12,6 +12,15 @@ fn test_modify_order(){
     let modify_order_request=ModifyOrderRequest{price:Some(dec!(107)),quantity:Some(dec!(300)),order_id:1};
     let result=orderbook.modify_order(modify_order_request);
     assert_eq!(result,Ok(ModifyOrderResponse::new(dec!(107),dec!(300),1)));
+
+    drop(orderbook);
+
+    let mut orderbook = Orderbook::new();
+    let limit_order = LimitOrder{price:dec!(105),quantity:dec!(200),side:Side::Bids,user_id:1};
+    orderbook.add_limit_order(limit_order);
+    let modify_order_request=ModifyOrderRequest{price:Some(dec!(107)),quantity:Some(dec!(300)),order_id:1};
+    let result=orderbook.modify_order(modify_order_request);
+    assert_eq!(result,Ok(ModifyOrderResponse::new(dec!(107),dec!(300),1)));
 }
 
 #[test]

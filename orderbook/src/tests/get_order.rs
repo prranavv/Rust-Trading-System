@@ -12,6 +12,15 @@ fn test_get_existing_order(){
     let open_order_1 = orderbook.add_limit_order(limit_order_1);
     let result = orderbook.get_order(open_order_1.order_id);
     assert_eq!(result,Ok(open_order_1));
+
+    drop(orderbook);
+
+    let mut orderbook = Orderbook::new();
+    
+    let limit_order_1= LimitOrder{price:dec!(105),quantity:dec!(200),side:Side::Bids,user_id:1};
+    let open_order_1 = orderbook.add_limit_order(limit_order_1);
+    let result = orderbook.get_order(open_order_1.order_id);
+    assert_eq!(result,Ok(open_order_1));
 }
 
 #[test]
@@ -21,9 +30,13 @@ fn test_get_matched_order(){
     let limit_order_1= LimitOrder{price:dec!(105),quantity:dec!(200),side:Side::Bids,user_id:1};
     let limit_order_2= LimitOrder{price:dec!(105),quantity:dec!(200),side:Side::Asks,user_id:1};
     let open_order_1 = orderbook.add_limit_order(limit_order_1);
-    orderbook.add_limit_order(limit_order_2);
+    let open_order_2=orderbook.add_limit_order(limit_order_2);
     let result = orderbook.get_order(open_order_1.order_id);
     let expected_result = OpenOrder::new(dec!(105), dec!(200), Side::Bids, dec!(200), 1, 1);
+    assert_eq!(result,Ok(expected_result));
+
+    let result = orderbook.get_order(open_order_2.order_id);
+    let expected_result = OpenOrder::new(dec!(105), dec!(200), Side::Asks, dec!(200), 1, 2);
     assert_eq!(result,Ok(expected_result));
 }
 
@@ -37,6 +50,18 @@ fn test_get_partially_filled_order(){
     orderbook.add_limit_order(limit_order_2);
     let result = orderbook.get_order(open_order_1.order_id);
     let expected_result = OpenOrder::new(dec!(105), dec!(200), Side::Bids, dec!(100), 1, 1);
+    assert_eq!(result,Ok(expected_result));
+
+    drop(orderbook);
+
+    let mut orderbook = Orderbook::new();
+    
+    let limit_order_1= LimitOrder{price:dec!(105),quantity:dec!(200),side:Side::Asks,user_id:1};
+    let limit_order_2= LimitOrder{price:dec!(105),quantity:dec!(100),side:Side::Bids,user_id:1};
+    let open_order_1=orderbook.add_limit_order(limit_order_1);
+    orderbook.add_limit_order(limit_order_2);
+    let result = orderbook.get_order(open_order_1.order_id);
+    let expected_result = OpenOrder::new(dec!(105), dec!(200), Side::Asks, dec!(100), 1, 1);
     assert_eq!(result,Ok(expected_result));
 }
 

@@ -152,7 +152,6 @@ impl Orderbook{
         }   
     }
 
-    //TODO - MODIFY IN PLACE WITHOUT CHANGING THE TIME PRIORITY
     pub fn modify_order(&mut self,modify_order_request:ModifyOrderRequest)->Result<ModifyOrderResponse,ErrorResponse>{
         let order = self.order_map.get_mut(&modify_order_request.order_id);
         if let Some(o)=order{
