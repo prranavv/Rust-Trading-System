@@ -30,6 +30,7 @@ pub struct DeleteResponse{
     order_id:u64
 }
 
+#[derive(PartialEq,Debug)]
 pub struct ModifyOrderResponse{
     pub success:bool,
     pub price:Decimal,
