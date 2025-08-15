@@ -4,7 +4,8 @@ use rust_decimal::Decimal;
 pub enum CustomError{
     OrderDoesNotExist,
     ModifyQuantityCannotBeLesserThanFilledQuantity,
-    LimitOrderDoesNotExist
+    LimitOrderDoesNotExist,
+    OrderAlreadyMatched
 }
 
 #[derive(Debug,PartialEq)]
@@ -15,10 +16,12 @@ pub struct MarketOrderResponse{
     error:Option<CustomError>
 }
 
+#[derive(PartialEq,Debug)]
 pub struct ErrorResponse{
     error:CustomError
 }
 
+#[derive(PartialEq,Debug)]
 pub struct DeleteResponse{
     success: bool,
     price:Decimal,
