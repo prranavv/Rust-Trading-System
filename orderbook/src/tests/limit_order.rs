@@ -10,6 +10,7 @@ use pretty_assertions::{assert_eq, assert_ne,};
 #[test]
 fn create_limit_order(){
     let mut orderbook =Orderbook::new();
+    //Asks Order
     let limit_order = LimitOrder{price:dec!(105),quantity:dec!(200),side:Side::Asks,user_id:1};
     let open_order=orderbook.add_limit_order(limit_order);
 
@@ -23,6 +24,25 @@ fn create_limit_order(){
     assert_ne!(open_order,OpenOrder::new(dec!(105), dec!(200), Side::Asks, dec!(0), 1, 23));
     //Everything Correct
     assert_eq!(open_order,OpenOrder::new(dec!(105), dec!(200), Side::Asks, dec!(0), 1, 1));
+    //Check if order has been added to asks
+    assert!(!orderbook.asks.is_empty());
+
+    //Bids Order
+    let limit_order = LimitOrder{price:dec!(100),quantity:dec!(200),side:Side::Bids,user_id:1};
+    let open_order=orderbook.add_limit_order(limit_order);
+
+    //Wrong Side
+    assert_ne!(open_order,OpenOrder::new(dec!(100), dec!(200), Side::Asks, dec!(0), 1, 2));
+    //Wrong Filled Quantity
+    assert_ne!(open_order,OpenOrder::new(dec!(100), dec!(200), Side::Bids, dec!(100), 1, 2));
+    //Wrong UserID
+    assert_ne!(open_order,OpenOrder::new(dec!(100), dec!(200), Side::Bids, dec!(0), 2, 2));
+    //Wrong OrderID
+    assert_ne!(open_order,OpenOrder::new(dec!(100), dec!(200), Side::Bids, dec!(0), 1, 23));
+    //Everything Correct
+    assert_eq!(open_order,OpenOrder::new(dec!(100), dec!(200), Side::Bids, dec!(0), 1, 2));
+    //Check if order has been added to asks
+    assert!(!orderbook.bids.is_empty());
 }
 
 #[test]

@@ -67,3 +67,8 @@ impl OpenOrder {
     }
 }
 
+impl MarketOrder{
+    pub fn new(quantity:Decimal,side:Side,user_id:u64)->MarketOrder{
+        MarketOrder { quantity , side, user_id }
+    }
+}

@@ -1,15 +1,18 @@
 use rust_decimal::Decimal;
 
+#[derive(Debug,PartialEq)]
 pub enum CustomError{
     OrderDoesNotExist,
-    ModifyQuantityCannotBeLesserThanFilledQuantity
+    ModifyQuantityCannotBeLesserThanFilledQuantity,
+    LimitOrderDoesNotExist
 }
 
-#[derive(Debug)]
+#[derive(Debug,PartialEq)]
 pub struct MarketOrderResponse{
     success: bool,
-    average_price: Decimal,
-    quantity:Decimal
+    average_price: Option<Decimal>,
+    quantity:Option<Decimal>,
+    error:Option<CustomError>
 }
 
 pub struct ErrorResponse{
@@ -33,8 +36,8 @@ pub struct ModifyOrderResponse{
 
 
 impl MarketOrderResponse{
-    pub fn new(success: bool,average_price:Decimal,quantity:Decimal)->MarketOrderResponse{
-        MarketOrderResponse { success, average_price, quantity }
+    pub fn new(success: bool,average_price:Option<Decimal>,quantity:Option<Decimal>,error:Option<CustomError>)->MarketOrderResponse{
+        MarketOrderResponse { success, average_price:average_price, quantity: quantity,error:error }
     }
 }
 
