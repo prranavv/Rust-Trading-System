@@ -1,16 +1,14 @@
 use std::{collections::HashMap};
-
 use orderbook::{
     DeleteResponse, Depth, ErrorResponse, LimitOrder, MarketOrder, MarketOrderResponse, ModifyOrderRequest, ModifyOrderResponse, OpenOrder, Orderbook
 };
 use rust_decimal::{Decimal};
-
 use crate::trading_engine::types::{TradingEngine, TradingEngineError, TradingPair};
 
 
 
 impl TradingEngine{
-    pub fn new(orderbook: Orderbook)->TradingEngine{
+    pub fn new()->TradingEngine{
         TradingEngine { orderbooks:HashMap::new() }
     }
 

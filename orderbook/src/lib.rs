@@ -9,6 +9,7 @@ pub use orderbook::types::{
     OpenOrder,
     MarketOrder,
     Depth,
+    Side,
     ModifyOrderRequest,
 };
 

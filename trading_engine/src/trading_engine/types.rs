@@ -15,6 +15,13 @@ pub struct TradingPair{
     pub quote:String
 }
 
+#[derive(Debug,PartialEq)]
 pub enum TradingEngineError{
     TradingPairDoesNotExist
+}
+
+impl TradingPair{
+    pub fn new(base:String,quote:String)->TradingPair{
+        TradingPair { base, quote }
+    }
 }

@@ -1,2 +1,2 @@
 mod trading_engine;
-mod types;
+pub mod types;
