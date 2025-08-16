@@ -31,7 +31,7 @@ pub struct MarketOrder{
     pub user_id: u64
 }
 
-#[derive(Debug)]
+#[derive(Debug,PartialEq)]
 pub struct Depth{
     pub bids: Vec<Order>,
     pub asks: Vec<Order>
@@ -70,5 +70,11 @@ impl OpenOrder {
 impl MarketOrder{
     pub fn new(quantity:Decimal,side:Side,user_id:u64)->MarketOrder{
         MarketOrder { quantity , side, user_id }
+    }
+}
+
+impl Order{
+    pub fn new(price:Decimal,quantity:Decimal,order_count:u64)->Order{
+        Order { price, quantity, order_count}
     }
 }

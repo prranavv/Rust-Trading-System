@@ -84,7 +84,7 @@ impl Orderbook{
         }
     }
 
-    pub fn depth(&self)->Depth{
+    pub fn get_depth(&self)->Depth{
         let bids=self.get_bids();
         let asks=self.get_asks();
         Depth { bids, asks }
@@ -237,7 +237,6 @@ impl Orderbook{
         open_order
     }
     
-    //TODO - MATCHING IS DONE.NOW EXECUTE THE TRADES
     fn match_limit_order(&mut self,order: LimitOrder,order_id:u64)->OpenOrder{
         let price = order.price;
         let mut remaining_quantity=order.quantity;
