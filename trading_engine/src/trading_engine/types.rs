@@ -20,6 +20,7 @@ pub enum TradingEngineError{
     TradingPairDoesNotExist
 }
 
+#[derive(PartialEq,Debug)]
 pub struct Markets{
     markets: Vec<TradingPair>
 }
