@@ -3,7 +3,7 @@ use orderbook::{
     DeleteResponse, Depth, ErrorResponse, LimitOrder, MarketOrder, MarketOrderResponse, ModifyOrderRequest, ModifyOrderResponse, OpenOrder, Orderbook
 };
 use rust_decimal::{Decimal};
-use crate::trading_engine::types::{TradingEngine, TradingEngineError, TradingPair};
+use crate::trading_engine::types::{Markets, TradingEngine, TradingEngineError, TradingPair};
 
 
 
@@ -44,6 +44,20 @@ impl TradingEngine{
     fn get_mid_price_for_trading_pair(&mut self,trading_pair:TradingPair)->Option<Decimal>{
         self.orderbooks.entry(trading_pair).or_insert(Orderbook::new()).mid_price()
     }
+
+    fn _get_markets(&self)->Markets{
+        let keys=self.orderbooks.keys();
+        let mut vec=Vec::<TradingPair>::new();
+        for key in keys{
+            vec.push(key.to_owned());
+        }
+        Markets::new(vec)
+    }
+
+    pub fn get_markets(&self)->Markets{
+        self._get_markets()
+    }
+
 
     pub fn create_market(&mut self,trading_pair:TradingPair){
         self.orderbooks.insert(trading_pair, Orderbook::new());

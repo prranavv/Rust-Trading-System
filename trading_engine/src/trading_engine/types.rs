@@ -9,7 +9,7 @@ pub struct TradingEngine{
     pub orderbooks: HashMap<TradingPair,Orderbook> 
 }
 
-#[derive(Eq, Hash, PartialEq,Clone)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TradingPair{
     pub base:String,
     pub quote:String
@@ -18,6 +18,16 @@ pub struct TradingPair{
 #[derive(Debug,PartialEq)]
 pub enum TradingEngineError{
     TradingPairDoesNotExist
+}
+
+pub struct Markets{
+    markets: Vec<TradingPair>
+}
+
+impl Markets{
+    pub fn new(markets: Vec<TradingPair>)->Markets{
+        Markets { markets }
+    }
 }
 
 impl TradingPair{
