@@ -17,5 +17,6 @@ pub use orderbook::response::{
     MarketOrderResponse,
     ModifyOrderResponse,
     ErrorResponse,
-    DeleteResponse
+    DeleteResponse,
+    CustomError
 };
