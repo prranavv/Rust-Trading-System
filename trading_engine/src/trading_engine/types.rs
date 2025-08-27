@@ -3,13 +3,15 @@ use std::collections::HashMap;
 use orderbook::{
     Orderbook
 };
+use serde::{Deserialize, Serialize};
 
 
+#[derive(Serialize,Deserialize,Clone)]
 pub struct TradingEngine{
     pub orderbooks: HashMap<TradingPair,Orderbook> 
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash,Serialize,Deserialize)]
 pub struct TradingPair{
     pub base:String,
     pub quote:String
@@ -17,7 +19,8 @@ pub struct TradingPair{
 
 #[derive(Debug,PartialEq)]
 pub enum TradingEngineError{
-    TradingPairDoesNotExist
+    TradingPairDoesNotExist,
+    TradingPairAlreadyExists
 }
 
 #[derive(PartialEq,Debug)]

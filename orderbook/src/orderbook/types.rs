@@ -1,15 +1,16 @@
 use std::collections::HashMap;
 use std::collections::{BTreeMap, VecDeque};
 use rust_decimal::Decimal;
+use serde::{Deserialize, Serialize};
 use std::cmp::Reverse;
 
-#[derive(Clone,Debug,PartialEq)]
+#[derive(Clone,Debug,PartialEq,Serialize,Deserialize)]
 pub enum Side{
     Asks,
     Bids
 }
 
-#[derive(Debug)]
+#[derive(Debug,Serialize,Deserialize,Clone)]
 pub struct Orderbook{
     pub bids: BTreeMap<Reverse<Decimal>,VecDeque<OpenOrder>>,
     pub asks: BTreeMap<Decimal,VecDeque<OpenOrder>>,
@@ -51,7 +52,7 @@ pub struct ModifyOrderRequest{
     pub order_id:u64
 }
 
-#[derive(Clone,Debug,PartialEq)]
+#[derive(Clone,Debug,PartialEq,Serialize,Deserialize)]
 pub struct OpenOrder{
     pub price: Decimal,
     pub quantity: Decimal,

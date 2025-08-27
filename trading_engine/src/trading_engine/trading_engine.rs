@@ -59,8 +59,12 @@ impl TradingEngine{
     }
 
 
-    pub fn create_market(&mut self,trading_pair:TradingPair){
+    pub fn create_market(&mut self,trading_pair:TradingPair)->Result<(),TradingEngineError>{
+        if self.check_if_market_exists(trading_pair.clone()){
+            return Err(TradingEngineError::TradingPairAlreadyExists)
+        }
         self.orderbooks.insert(trading_pair, Orderbook::new());
+        Ok(())
     }
 
     pub fn add_limit_order_into_market(&mut self,trading_pair:TradingPair,order: LimitOrder)->Result<OpenOrder,TradingEngineError>{

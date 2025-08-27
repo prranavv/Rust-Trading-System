@@ -5,4 +5,5 @@ edition = "2024"
 
 [dependencies]
 orderbook ={ path = "../orderbook"}
+serde = {version = "1.0.219",features = ["derive"]}
 rust_decimal = { version = "1.37.2", features = ["macros"] }

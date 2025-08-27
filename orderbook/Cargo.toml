@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 rust_decimal = { version = "1.37.2", features = ["macros"] }
+serde = {version = "1.0.219",features = ["derive"]}
 
 [dev-dependencies]
 pretty_assertions = "1"
