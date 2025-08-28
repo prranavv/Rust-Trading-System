@@ -23,9 +23,9 @@ pub enum TradingEngineError{
     TradingPairAlreadyExists
 }
 
-#[derive(PartialEq,Debug)]
+#[derive(PartialEq,Debug,Serialize,Deserialize)]
 pub struct Markets{
-    markets: Vec<TradingPair>
+    pub markets: Vec<TradingPair>
 }
 
 impl Markets{
