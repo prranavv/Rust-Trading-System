@@ -33,13 +33,13 @@ pub struct MarketOrder{
     pub user_id: u64
 }
 
-#[derive(Debug,PartialEq)]
+#[derive(Debug,PartialEq,Serialize,Deserialize)]
 pub struct Depth{
     pub bids: Vec<Order>,
     pub asks: Vec<Order>
 }
 
-#[derive(Debug,PartialEq)]
+#[derive(Debug,PartialEq,Serialize,Deserialize)]
 pub struct Order{
     pub price: Decimal,
     pub quantity: Decimal,
