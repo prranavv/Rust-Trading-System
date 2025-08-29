@@ -26,6 +26,7 @@ pub struct LimitOrder{
     pub user_id:u64
 }
 
+#[derive(Serialize,Deserialize)]
 pub struct MarketOrder{
     pub quantity: Decimal,
     pub side: Side,

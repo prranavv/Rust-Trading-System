@@ -1,6 +1,7 @@
 use rust_decimal::Decimal;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug,PartialEq)]
+#[derive(Debug,PartialEq,Serialize,Deserialize)]
 pub enum CustomError{
     OrderDoesNotExist,
     ModifyQuantityCannotBeLesserThanFilledQuantity,
@@ -8,7 +9,7 @@ pub enum CustomError{
     OrderAlreadyMatched
 }
 
-#[derive(Debug,PartialEq)]
+#[derive(Debug,PartialEq,Serialize,Deserialize)]
 pub struct MarketOrderResponse{
     success: bool,
     average_price: Option<Decimal>,
