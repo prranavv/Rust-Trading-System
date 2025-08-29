@@ -47,6 +47,7 @@ pub struct Order{
     
 }
 
+#[derive(Serialize,Deserialize)]
 pub struct ModifyOrderRequest{
     pub price:Option<Decimal>,
     pub quantity: Option<Decimal>,

@@ -9,6 +9,6 @@ use crate::routes::depth::{
 
 pub fn market_depth_router(state:Arc<Mutex<TradingEngine>>)->Router{
     Router::new()
-        .route("/api/v1/limit-order", get(get_market_depth))
+        .route("/api/v1/depth", get(get_market_depth))
         .with_state(state)
 }
