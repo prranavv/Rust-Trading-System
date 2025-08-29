@@ -17,7 +17,7 @@ pub struct TradingPair{
     pub quote:String
 }
 
-#[derive(Debug,PartialEq)]
+#[derive(Debug,PartialEq,Serialize,Deserialize)]
 pub enum TradingEngineError{
     TradingPairDoesNotExist,
     TradingPairAlreadyExists

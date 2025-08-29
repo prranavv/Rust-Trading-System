@@ -1,10 +1,5 @@
 use std::sync::{Arc, Mutex};
 
-use axum::{
-    routing::{get, post},
-    Router,
-};
-
 mod routes;
 mod router;
 mod types;

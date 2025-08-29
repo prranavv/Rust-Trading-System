@@ -18,7 +18,7 @@ pub struct Orderbook{
     pub order_map:HashMap<u64,OpenOrder>
 }
 
-#[derive(Clone)]
+#[derive(Clone,Serialize,Deserialize)]
 pub struct LimitOrder{
     pub price: Decimal,
     pub quantity: Decimal,
