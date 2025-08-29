@@ -1,6 +1,6 @@
 use std::sync::{Arc, Mutex};
 
-use axum::{routing::{get, post}, Router};
+use axum::{routing::{get}, Router};
 use trading_engine::TradingEngine;
 
 use crate::routes::depth::{

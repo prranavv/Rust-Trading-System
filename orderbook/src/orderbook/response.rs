@@ -19,10 +19,10 @@ pub struct MarketOrderResponse{
 
 #[derive(PartialEq,Debug)]
 pub struct ErrorResponse{
-    error:CustomError
+    pub error:CustomError
 }
 
-#[derive(PartialEq,Debug)]
+#[derive(PartialEq,Debug,Serialize,Deserialize)]
 pub struct DeleteResponse{
     success: bool,
     price:Decimal,

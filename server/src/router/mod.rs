@@ -7,11 +7,13 @@ use crate::router::markets::markets_router;
 use crate::router::limit_order::limit_order_router;
 use crate::router::market_order::market_order_router;
 use crate::router::depth::market_depth_router;
+use crate::router::order::order_router;
 
 mod markets;
 mod limit_order;
 mod market_order;
 mod depth;
+mod order;
 
 pub fn init_router(state: Arc<Mutex<TradingEngine>>)->Router{
     Router::new()
@@ -19,4 +21,5 @@ pub fn init_router(state: Arc<Mutex<TradingEngine>>)->Router{
         .merge(limit_order_router(state.clone()))
         .merge(market_order_router(state.clone()))
         .merge(market_depth_router(state.clone()))
+        .merge(order_router(state.clone()))
 }
