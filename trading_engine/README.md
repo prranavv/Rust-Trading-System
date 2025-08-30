@@ -378,10 +378,6 @@ The Trading Engine is designed to work seamlessly with the orderbook library. Ea
 - `serde`: Serialization support
 - `std::collections::HashMap`: Market storage
 
-## License
-
-[Specify your license here]
-
 ## See Also
 
 - [Orderbook Library](../orderbook/README.md) - Underlying orderbook implementation
