@@ -341,7 +341,7 @@ HTTP API (end-to-end):
 ## 📧 Contact
 
 - GitHub Issues: [Report bugs or request features](https://github.com/yourusername/rust-trading-system/issues)
-- Email: your.email@example.com
+- Email: pranavvkumar03@gmail.com
 
 ---
 
