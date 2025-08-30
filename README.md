@@ -312,26 +312,6 @@ GET /api/v1/depth
 - [ ] Admin dashboard
 - [ ] FIX protocol support
 
-## 📊 Benchmarks
-
-```
-Order Operations (single market):
-- Limit Order Placement: 1,000,000 orders/sec
-- Market Order Execution: 500,000 orders/sec
-- Order Cancellation: 750,000 orders/sec
-
-HTTP API (end-to-end):
-- Requests per second: 10,000 RPS
-- P50 latency: 1ms
-- P99 latency: 10ms
-```
-
-*Benchmarked on: AMD Ryzen 9 5900X, 32GB RAM*
-
-## 📜 License
-
-[Specify your license here - e.g., MIT, Apache 2.0]
-
 ## 🙏 Acknowledgments
 
 - Built with [Axum](https://github.com/tokio-rs/axum) web framework
