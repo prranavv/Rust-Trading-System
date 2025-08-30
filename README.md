@@ -312,6 +312,10 @@ GET /api/v1/depth
 - [ ] Admin dashboard
 - [ ] FIX protocol support
 
+## 📝 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
 ## 🙏 Acknowledgments
 
 - Built with [Axum](https://github.com/tokio-rs/axum) web framework
