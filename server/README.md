@@ -266,48 +266,6 @@ Response:
 }
 ```
 
-## 🏗️ Architecture
-
-The trading server is built with a modular architecture:
-
-```
-trading-server/
-├── src/
-│   ├── main.rs           # Application entry point
-│   ├── router/           # Route definitions
-│   │   ├── mod.rs        # Router initialization
-│   │   ├── markets.rs    # Market routes
-│   │   ├── limit_order.rs
-│   │   ├── market_order.rs
-│   │   ├── depth.rs
-│   │   └── order.rs
-│   ├── routes/           # Route handlers
-│   │   ├── mod.rs
-│   │   ├── markets.rs    # Market handlers
-│   │   ├── limit_order.rs
-│   │   ├── market_order.rs
-│   │   ├── depth.rs
-│   │   └── order.rs
-│   └── types/            # Request/Response types
-│       ├── mod.rs
-│       ├── markets.rs
-│       ├── limit_order.rs
-│       ├── market_order.rs
-│       ├── depth.rs
-│       └── order.rs
-├── orderbook/            # Order book implementation
-│   └── lib.rs
-├── trading_engine/       # Trading engine core
-└── Cargo.toml
-```
-
-### Key Components
-
-- **Trading Engine**: Core matching engine that manages all markets and executes trades
-- **Order Book**: Maintains buy and sell orders for each trading pair
-- **Router Layer**: Axum-based HTTP routing with proper state management
-- **Type System**: Strongly typed request/response structures with serde serialization
-
 ## 🔧 Configuration
 
 The server runs on port 8000 by default. To change this, modify the bind address in `main.rs`:
