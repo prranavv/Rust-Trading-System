@@ -321,10 +321,6 @@ Contributions are welcome! Please ensure:
 3. Code follows Rust conventions
 4. Documentation is updated
 
-## License
-
-[Specify your license here]
-
 ## Safety Considerations
 
 When using this library in production:
