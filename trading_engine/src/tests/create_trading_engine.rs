@@ -8,7 +8,7 @@ use rust_decimal::dec;
 fn test_create_trade_engine(){
     let mut engine = TradingEngine::new();
     let trading_pair =TradingPair::new("BTC".to_string(),"USDT".to_string());
-    engine.create_market(trading_pair.clone());
+    let _ =engine.create_market(trading_pair.clone());
     let limit_order = LimitOrder{price:dec!(105),quantity:dec!(200),side:Side::Asks,user_id:1};
     let result = engine.add_limit_order_into_market(trading_pair, limit_order);
     

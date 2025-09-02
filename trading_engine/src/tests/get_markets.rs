@@ -7,8 +7,8 @@ fn test_get_markets(){
     let mut engine = TradingEngine::new();
     let td1 = TradingPair::new("BTC".to_string(), "USDC".to_string());
     let td2= TradingPair::new("BTC".to_string(), "USDT".to_string());
-    engine.create_market(td1.clone());
-    engine.create_market(td2.clone());
+    let _ =engine.create_market(td1.clone());
+    let _ = engine.create_market(td2.clone());
     let mut v = Vec::<TradingPair>::new();
     v.push(td1);
     v.push(td2);
