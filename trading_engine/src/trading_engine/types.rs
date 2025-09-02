@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{BTreeMap};
 
 use orderbook::{
     Orderbook
@@ -8,10 +8,10 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize,Deserialize,Clone)]
 pub struct TradingEngine{
-    pub orderbooks: HashMap<TradingPair,Orderbook> 
+    pub orderbooks: BTreeMap<TradingPair,Orderbook> 
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash,Serialize,Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash,Serialize,Deserialize,PartialOrd, Ord)]
 pub struct TradingPair{
     pub base:String,
     pub quote:String

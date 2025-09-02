@@ -1,4 +1,4 @@
-use std::{collections::HashMap};
+use std::collections::{BTreeMap};
 use orderbook::{
     DeleteResponse, Depth, ErrorResponse, LimitOrder, MarketOrder, MarketOrderResponse, ModifyOrderRequest, ModifyOrderResponse, OpenOrder, Orderbook
 };
@@ -9,7 +9,7 @@ use crate::trading_engine::types::{Markets, TradingEngine, TradingEngineError, T
 
 impl TradingEngine{
     pub fn new()->TradingEngine{
-        TradingEngine { orderbooks:HashMap::new() }
+        TradingEngine { orderbooks:BTreeMap::new() }
     }
 
     fn check_if_market_exists(&self,trading_pair:TradingPair)->bool{
