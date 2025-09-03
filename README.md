@@ -23,7 +23,7 @@ A high-performance, modular trading system built in Rust, featuring a complete o
 
 ### Prerequisites
 
-- Rust 1.70+
+- Rust 1.87+
 - Cargo
 
 ### Installation
