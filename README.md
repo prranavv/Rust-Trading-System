@@ -191,31 +191,6 @@ let listener = tokio::net::TcpListener::bind("0.0.0.0:8000").await.unwrap();
 ### Decimal Precision
 The system uses `rust_decimal` for all price and quantity calculations to ensure financial precision.
 
-## 📈 Performance
-
-- **Order Placement**: ~1ms average latency
-- **Order Matching**: O(log n) complexity
-- **Market Operations**: O(1) market lookup
-- **Concurrent Requests**: Handled via Tokio async runtime
-- **Memory**: ~100MB base + ~1MB per 10,000 orders
-
-*Note: Benchmarks are approximate and depend on hardware*
-
-## 🔒 Security Considerations
-
-- **Input Validation**: All endpoints validate input data
-- **Decimal Precision**: No floating-point errors in financial calculations
-- **Thread Safety**: Mutex-protected shared state
-- **Error Handling**: Comprehensive error types and responses
-
-## 🚦 Development Workflow
-
-1. **Make Changes**: Edit code in respective directories
-2. **Run Tests**: `cargo test` to ensure nothing breaks
-3. **Format Code**: `cargo fmt` for consistent formatting
-4. **Check Lints**: `cargo clippy` for code quality
-5. **Build**: `cargo build --release` for production build
-
 ## 📝 Example: Complete Trading Flow
 
 ```rust
@@ -270,58 +245,9 @@ GET /api/v1/depth
 - [Server API Documentation](./server/README.md)
 - [Rust API Docs](https://docs.rs): Run `cargo doc --open`
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open Pull Request
-
-### Development Guidelines
-
-- Write tests for new features
-- Maintain backward compatibility
-- Update documentation
-- Follow Rust conventions
-- Add benchmarks for performance-critical code
-
-## 📈 Roadmap
-
-### Phase 1: Core Features ✅
-- [x] Basic orderbook implementation
-- [x] Multi-market support
-- [x] REST API
-
-### Phase 2: Enhanced Features 🚧
-- [ ] WebSocket support for real-time updates
-- [ ] Authentication & authorization
-- [ ] Persistence layer (PostgreSQL/RocksDB)
-- [ ] Order history and trade logs
-
-### Phase 3: Advanced Trading 📋
-- [ ] Stop-loss and take-profit orders
-- [ ] Iceberg orders
-- [ ] Time-in-force conditions (IOC, FOK, GTC)
-- [ ] Cross-market arbitrage detection
-
-### Phase 4: Production Ready 📋
-- [ ] Horizontal scaling
-- [ ] Disaster recovery
-- [ ] Audit logging
-- [ ] Admin dashboard
-- [ ] FIX protocol support
-
 ## 📝 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🙏 Acknowledgments
-
-- Built with [Axum](https://github.com/tokio-rs/axum) web framework
-- Decimal handling by [rust_decimal](https://github.com/paupino/rust-decimal)
-- Async runtime by [Tokio](https://tokio.rs/)
-
 ## 📧 Contact
 
 - GitHub Issues: [Report bugs or request features](https://github.com/yourusername/rust-trading-system/issues)
