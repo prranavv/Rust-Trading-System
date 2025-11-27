@@ -1,4 +1,4 @@
 [workspace]
 resolver = "3"
-members = [ "trading_engine", "orderbook","server"]
+members = [ "trading_engine", "orderbook","server", "database"]
 
